@@ -18,6 +18,22 @@ while True:
     except ValueError:
         print("Invalid expiry date. Please try again.")
 
+while True:
+    allowed_ips = input("Enter a comma-separated list of allowed IP addresses (leave blank for all IPs): ")
+
+    if allowed_ips == "":
+        allowed_ips = ["*"]
+        break
+
+    allowed_ips = allowed_ips.split(",")
+
+    for ip in allowed_ips:
+        for part in ip.split("."):
+            if not part.isdigit() or int(part) < 0 or int(part) > 255:
+                print("Invalid IP address. Please try again.")
+    else:
+        break
+
 if not os.path.exists("data"):
     os.mkdir("data")
 
@@ -39,5 +55,13 @@ key_item = {
     "comment": comment,
     "permissions": ["read", "write", "delete"],
     "expires": expiry,
-    "allowed_ips": ["*"]
+    "allowed_ips": allowed_ips
 }
+
+access["keys"].append(key_item)
+
+with open("data/access.json", "w") as f:
+    json.dump(access, f, indent=4)
+
+print(f"Secret: {api_key}")
+print("API key generated successfully.")
