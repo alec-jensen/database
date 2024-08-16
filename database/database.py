@@ -1,10 +1,17 @@
+import logging
+
 from server import Server
 from manager import Manager
 
+logging.basicConfig(level=logging.DEBUG)
+
 class Database:
     def __init__(self) -> None:
+        logging.debug("Initializing manager")
         self.manager = Manager()
+        logging.debug("Initializing server")
         self.server = Server(self.manager)
+        logging.debug("Starting server")
         self.server.start()
 
     def _verify_collection_name(self, collection: str):
@@ -52,5 +59,4 @@ class Database:
         self._verify_collection_name(collection)
         return self.manager.delete_many(collection, query, count)
 
-if __name__ == "__main__":
-    Database()
+database = Database()

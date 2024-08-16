@@ -1,1 +1,1 @@
-webserver @ git+https://github.com/alec-jensen/webserver.git@3f612c7fdcce25cafe9eb9f0b45d1e98cc56c7d0
+webserver @ git+https://github.com/alec-jensen/webserver.git@96e2de112ed4bc6506fbad8d426cf1e19aadad82

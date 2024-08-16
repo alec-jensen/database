@@ -1,6 +1,6 @@
 # The API
 ## Authenticating with the API
-To authenticate with the API, you need to provide a valid API key in the `x-api-key` header of your request. You can generate an API key by running the `generate_api_key` utility script.
+To authenticate with the API, you need to provide a valid API key in the `Authorization` header of your request. You can generate an API key by running the `generate_api_key` utility script.
 
 ## Routes
 - GET /{collection}/fetch_one - Fetch the first document from the database, using a JSON query provided in the request body.

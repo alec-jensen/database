@@ -47,11 +47,14 @@ with open("data/access.json", "r") as f:
 if access.get("keys") is None:
     access["keys"] = []
 
-api_key = str(uuid.uuid4())
+api_key = uuid.uuid4().hex
 key_hash = hashlib.sha256(api_key.encode()).hexdigest()
 
+key_id = uuid.uuid4().hex
+
 key_item = {
-    "key": key_hash,
+    "hash": key_hash,
+    "id": key_id,
     "comment": comment,
     "permissions": ["read", "write", "delete"],
     "expires": expiry,
@@ -63,5 +66,5 @@ access["keys"].append(key_item)
 with open("data/access.json", "w") as f:
     json.dump(access, f, indent=4)
 
-print(f"Secret: {api_key}")
+print(f"Secret: {key_id}+{api_key}")
 print("API key generated successfully.")
