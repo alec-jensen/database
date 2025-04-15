@@ -1,8 +1,14 @@
 # The API
+
 ## Authenticating with the API
+
 To authenticate with the API, you need to provide a valid API key in the `Authorization` header of your request. You can generate an API key by running the `generate_api_key` utility script.
 
 ## Routes
+
+- POST /{collection} - Create a new collection in the database.
+- DELETE /{collection} - Delete a collection from the database.
+- GET /{collection}/count - Get the number of documents in a collection.
 - GET /{collection}/fetch_one - Fetch the first document from the database, using a JSON query provided in the request body.
 - GET /{collection}/fetch_many?count=X - Fetch the first X documents from the database, using a JSON query provided in the request body.
 - POST /{collection}/insert_one - Insert a document into the database, using a JSON document provided in the request body.

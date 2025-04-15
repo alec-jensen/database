@@ -27,6 +27,18 @@ class Database:
         if "_id" in document:
             raise ValueError("Document cannot contain an _id field.")
 
+    def create_collection(self, collection: str):
+        self._verify_collection_name(collection)
+        return self.manager.create_collection(collection)
+
+    def drop_collection(self, collection: str):
+        self._verify_collection_name(collection)
+        return self.manager.drop_collection(collection)
+
+    def count(self, collection: str):
+        self._verify_collection_name(collection)
+        return self.manager.count(collection)
+
     def fetch_one(self, collection: str, query: dict):
         self._verify_collection_name(collection)
         return self.manager.fetch_one(collection, query)

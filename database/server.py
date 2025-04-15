@@ -1,4 +1,5 @@
-from webserver import Request, Webserver, Response, ResponseCodes
+from webserver import Webserver
+from webserver.enums import HTTPResponseCode, HTTPResponse, HTTPRequest
 import json
 import hashlib
 import hmac
@@ -11,18 +12,18 @@ class Server:
         self.manager = manager
 
         @self.server.get("/{collection}/fetch_one")
-        async def fetch_one(request: Request, collection: str):
+        async def fetch_one(request: HTTPRequest, collection: str):
             if not self._authenticate(request):
-                return Response("Unauthorized", status=ResponseCodes.UNAUTHORIZED)
+                return HTTPResponse("Unauthorized", status=HTTPResponseCode.UNAUTHORIZED)
             
             try:
                 query = json.loads(request.body)
             except json.JSONDecodeError:
-                return Response("Invalid JSON", status=ResponseCodes.BAD_REQUEST)
+                return HTTPResponse("Invalid JSON", status=HTTPResponseCode.BAD_REQUEST)
             
             doc = self.manager.fetch_one(collection, query)
 
-            response = Response(json.dumps({
+            response = HTTPResponse(json.dumps({
                 "status": "success",
                 "document": doc
             }), headers={"Content-Type": "application/json"})
@@ -30,19 +31,19 @@ class Server:
             return response
         
         @self.server.post("/{collection}/insert_one")
-        async def insert_one(request: Request, collection: str):
+        async def insert_one(request: HTTPRequest, collection: str):
             print(request.headers)
             if not self._authenticate(request):
-                return Response("Unauthorized", status=ResponseCodes.UNAUTHORIZED)
+                return HTTPResponse("Unauthorized", status=HTTPResponseCode.UNAUTHORIZED)
             
             try:
                 document = json.loads(request.body)
             except json.JSONDecodeError:
-                return Response("Invalid JSON", status=ResponseCodes.BAD_REQUEST)
+                return HTTPResponse("Invalid JSON", status=HTTPResponseCode.BAD_REQUEST)
             
             self.manager.insert_one(collection, document)
 
-            response = Response(json.dumps({
+            response = HTTPResponse(json.dumps({
                 "status": "success"
             }), headers={"Content-Type": "application/json"})
 
@@ -51,7 +52,7 @@ class Server:
     def start(self):
         self.server.start()
 
-    def _authenticate(self, request: Request):
+    def _authenticate(self, request: HTTPRequest):
         if "Authorization" not in request.headers:
             return False
         

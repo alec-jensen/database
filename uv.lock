@@ -1,0 +1,19 @@
+version = 1
+revision = 1
+requires-python = ">=3.13"
+
+[[package]]
+name = "database"
+version = "0.1.0"
+source = { virtual = "." }
+dependencies = [
+    { name = "webserver" },
+]
+
+[package.metadata]
+requires-dist = [{ name = "webserver", git = "https://github.com/alec-jensen/webserver.git?rev=8acb9f7fd045d0133fd1fcfa2c8823d0a264155b" }]
+
+[[package]]
+name = "webserver"
+version = "0.0.1"
+source = { git = "https://github.com/alec-jensen/webserver.git?rev=8acb9f7fd045d0133fd1fcfa2c8823d0a264155b#8acb9f7fd045d0133fd1fcfa2c8823d0a264155b" }

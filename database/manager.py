@@ -17,6 +17,33 @@ class Manager:
             with open("data/access.json", "w") as f:
                 f.write("{}")
 
+    def create_collection(self, collection: str):
+        if not os.path.exists(f"data/{collection}"):
+            os.makedirs(f"data/{collection}")
+        else:
+            raise ValueError("Collection already exists.")
+        return True
+
+    def drop_collection(self, collection: str):
+        if not os.path.exists(f"data/{collection}"):
+            raise ValueError("Collection does not exist.")
+        
+        for file in os.listdir(f"data/{collection}"):
+            os.remove(f"data/{collection}/{file}")
+        
+        os.rmdir(f"data/{collection}")
+        return True
+
+    def count(self, collection: str):
+        if not os.path.exists(f"data/{collection}"):
+            raise ValueError("Collection does not exist.")
+        
+        count = 0
+        for file in os.listdir(f"data/{collection}"):
+            count += 1
+        
+        return count
+
     def fetch_one(self, collection: str, query: dict):
         if not os.path.exists(f"data/{collection}"):
             os.makedirs(f"data/{collection}")

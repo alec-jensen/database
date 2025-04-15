@@ -1,0 +1,12 @@
+[project]
+name = "database"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "webserver",
+]
+
+[tool.uv.sources]
+webserver = { git = "https://github.com/alec-jensen/webserver.git", rev = "8acb9f7fd045d0133fd1fcfa2c8823d0a264155b" }
